@@ -1,0 +1,40 @@
+unit PriceList_U;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, GridsEh,
+  DBAxisGridsEh, DBGridEh, Buttons;
+
+type
+  TPriceList_F = class(TForm)
+    DBGridEh1: TDBGridEh;
+    FindBtn: TSpeedButton;
+    Btn_Close: TSpeedButton;
+    procedure FindBtnClick(Sender: TObject);
+    procedure Btn_CloseClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  PriceList_F: TPriceList_F;
+
+implementation
+
+{$R *.dfm}
+uses dm_u;
+procedure TPriceList_F.Btn_CloseClick(Sender: TObject);
+begin
+  ModalResult :=mrCancel;
+end;
+
+procedure TPriceList_F.FindBtnClick(Sender: TObject);
+begin
+  ModalResult :=mrOk;
+end;
+
+end.

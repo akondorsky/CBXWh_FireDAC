@@ -1,0 +1,67 @@
+unit UslAdd_U;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, GridsEh,
+  DBAxisGridsEh, DBGridEh, StdCtrls, Mask, DBCtrlsEh, DBCtrls, Buttons, ExtCtrls,
+  Keyboard;
+
+type
+  TUslAdd_F = class(TForm)
+    Label1: TLabel;
+    E_Kol: TDBNumberEditEh;
+    TouchKeyboard1: TTouchKeyboard;
+    FindBtn: TSpeedButton;
+    Btn_Close: TSpeedButton;
+    E_Usl: TButtonedEdit;
+    Label2: TLabel;
+    procedure FormShow(Sender: TObject);
+    procedure SpeedButton4Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure E_UslRightButtonClick(Sender: TObject);
+    procedure Btn_CloseClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  UslAdd_F: TUslAdd_F;
+
+implementation
+uses main,dm_u, PriceList_U;
+
+{$R *.dfm}
+
+procedure TUslAdd_F.Btn_CloseClick(Sender: TObject);
+begin
+  ModalResult :=mrCancel;
+end;
+
+procedure TUslAdd_F.E_UslRightButtonClick(Sender: TObject);
+begin
+  if PriceList_F.ShowModal = mrOk then
+     E_Usl.Text := DM.Qry_PriceList.FieldByName('USLUGA').AsString;
+end;
+
+procedure TUslAdd_F.FormShow(Sender: TObject);
+begin
+  (Sender as Tform).Caption:= Dm.Qry_PartsZAYV.AsString +'. Добавление услуги.';
+  E_Usl.Clear;
+  E_Kol.Clear;
+end;
+
+procedure TUslAdd_F.SpeedButton3Click(Sender: TObject);
+begin
+ if not DM.Qry_PriceList.eof then DM.Qry_PriceList.Next;
+end;
+
+procedure TUslAdd_F.SpeedButton4Click(Sender: TObject);
+begin
+ if not DM.Qry_PriceList.Bof then DM.Qry_PriceList.Prior;
+end;
+
+end.

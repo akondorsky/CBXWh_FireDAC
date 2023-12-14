@@ -1,0 +1,93 @@
+unit dm_u;
+
+interface
+
+uses
+  SysUtils, Classes, DB, IBDatabase, IBSQL, IBCustomDataSet, IBQuery, IBEvents;
+
+type
+  TDM = class(TDataModule)
+    Qry: TIBQuery;
+    Sql: TIBSQL;
+    IBTW: TIBTransaction;
+    IBTR: TIBTransaction;
+    DB: TIBDatabase;
+    DS_TP: TDataSource;
+    Qry_TP: TIBQuery;
+    DS_Parts: TDataSource;
+    Qry_Parts: TIBQuery;
+    Qry_PartsID: TIntegerField;
+    Qry_PartsID_TICKET: TIntegerField;
+    Qry_PartsID_OWNER: TIntegerField;
+    Qry_PartsNPP: TIntegerField;
+    Qry_PartsSTEP_CTRL: TIntegerField;
+    Qry_PartsPART_NOMER: TIBStringField;
+    Qry_PartsZAYV: TIBStringField;
+    Qry_PartsSTEP_HUMAN: TStringField;
+    Qry_PartsPAY_CONTROL: TIntegerField;
+    Qry_Usl: TIBQuery;
+    Ds_Usl: TDataSource;
+    Qry_PriceList: TIBQuery;
+    Ds_PriceList: TDataSource;
+    Qry_PartsID_PRICE: TIntegerField;
+    Qry_PartsTS_FLAG: TSmallintField;
+    procedure Ds_UslStateChange(Sender: TObject);
+    procedure DS_TPStateChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure OpenDB;
+    procedure CloseDB;
+    procedure GetUserFromCard(AGui:String);
+  end;
+
+var
+  DM: TDM;
+
+implementation
+uses global_u,main;
+{$R *.dfm}
+
+procedure TDM.CloseDB;
+begin
+  Qry_Parts.Close;
+  Qry_TP.Close;
+  Qry_Usl.Close;
+end;
+
+procedure TDM.DS_TPStateChange(Sender: TObject);
+begin
+  Main_F.Pnl_NavTP.Enabled := DM.Qry_TP.Active;
+end;
+
+procedure TDM.Ds_UslStateChange(Sender: TObject);
+begin
+  Main_F.Pnl_NavUsl.Enabled := DM.Qry_Usl.Active;
+end;
+
+procedure TDM.GetUserFromCard(AGui: String);
+begin
+  if Qry.Active then Qry.Close;
+  Qry.SQL.Clear;
+  Qry.SQL.Add(' SELECT FIRST 1 * FROM USERS WHERE CARDGUI CONTAINING :P0 AND WORKING = 1 ');
+  Qry.Params[0].AsString:=AGui;
+  Qry.Open;
+  if not Qry.FieldByName('ID').IsNull then
+    begin
+      _IdUser:=Qry.FieldByName('ID').AsInteger;
+      _User:=Qry.FieldByName('FIO').AsString;
+      _Role:=Qry.FieldByName('ROLE').AsString;
+      _Dolj:=Qry.FieldByName('DOLJ').AsString;
+      _AuthUser := True;
+    end;
+end;
+
+procedure TDM.OpenDB;
+begin
+  Qry_Parts.Open;
+  Qry_TP.Open;
+  Qry_Usl.Open;
+end;
+
+end.
