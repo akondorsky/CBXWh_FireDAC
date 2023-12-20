@@ -157,6 +157,7 @@ procedure TMain_F.CheckATR(ASender: TObject; const ReaderName: WideString; ATR: 
 var
   psa: PSafeArray;
   wType: word;
+  i:byte;
 begin
   psa:=PSafeArray(TVarData(POleVariant(TVarData(ATR).VAny)^).VArray);
   wType:=Mifare.CardTypeFromATR(psa);
@@ -169,18 +170,20 @@ end;
 function TMain_F.ConnectToDatabase: Boolean;
 var
   F:TextFile;
-  DB_Name,FileName:String;
+  FileName,ConnParams,DB_Name,ConString:String;
 begin
   Result:=False;
   FileName:='connectstring.ini';
   AssignFile(F,FileName);
   Reset(F);
-  ReadLn(F,DB_Name);
+  Readln(F,DB_Name);
+  ReadLn(F,ConnParams);
   CloseFile(F);
-  //DM.DB.DatabaseName:=Db_Name;
-  DM.FDConn.Params.Add(format('Database:=%s',[DB_Name]));
+  ConnParams:=DB_Name+ConnParams+'User_Name=sysdba;Password=mkey;';
+  DM.FDConn.Params.Clear;
+  DM.FDConn.ConnectionString:=ConnParams;
   try
-      DM.FDConn.Open;
+     DM.FDConn.Open;
   except
     on E: Exception do
       begin
@@ -188,9 +191,11 @@ begin
        Halt;
       end
   end;
-  _DbName:=DB_Name;
+  _DbName:='Соединение успешно.'+DB_Name;
   Result:=DM.FDConn.Connected;
 end;
+
+
 
 procedure TMain_F.FindBtnClick(Sender: TObject);
 begin
@@ -213,7 +218,6 @@ begin
  DM.Qry_Parts.Params[0].AsInteger:=StrToInt(Copy(S,1,7));
  DM.Qry_Parts.Params[1].AsInteger:=StrToInt(Copy(S,9,1));
  DM.Qry_Parts.Open;
-// if not DM.Qry_Parts.FieldByName('PART_NOMER').IsNull then Lbl_KT.Caption:=DM.Qry_Parts.FieldByName('PART_NOMER').AsString;
  if not DM.Qry_parts.FieldByName('ID').IsNull then Result:=True;
 
 end;
@@ -263,16 +267,6 @@ begin
 ConnectToDatabase;
 StatusBar1.Panels[0].Text := _DbName;
 SetStartValues;
-// if not ConnectToDatabase    then
-//    begin
-//      Application.MessageBox('Ошибка соединения с базой данных.','Внимание',MB_ICONERROR+MB_OK);
-//      Halt;
-//      //Application.Terminate;
-//    end
-//   else
-//    begin
-
-//    end;
 end;
 
 procedure TMain_F.SetStartValues;

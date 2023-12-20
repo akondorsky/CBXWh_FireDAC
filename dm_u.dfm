@@ -236,6 +236,7 @@ object DM: TDM
       'CharacterSet=WIN1251'
       'Protocol=TCPIP'
       'Server=127.0.0.1'
+      'Port=3050'
       'DriverID=FB')
     LoginPrompt = False
     Transaction = FDTrR
@@ -263,6 +264,8 @@ object DM: TDM
   end
   object FDQry: TFDQuery
     Connection = FDConn
+    SQL.Strings = (
+      'select * from users')
     Left = 424
     Top = 216
   end

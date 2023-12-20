@@ -2,12 +2,12 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>1899.12.30 00:00:00.000.321,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Login_U.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.563,C:\Users\User\Documents\RAD Studio\Projects\Workers\Main.dfm=C:\Users\User\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.814,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.dfm=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\dm_u.dfm</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.871,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\PriceList_U.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.563,C:\Users\User\Documents\RAD Studio\Projects\Workers\Main.dfm=C:\Users\User\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.345,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\UslAdd_U.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.294,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.767,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.345,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\UslAdd_U.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.871,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\PriceList_U.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.703,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Cardcheck_U.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.821,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Cardcheck_U.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.937,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Lib\Contactless.pas</Transaction>
