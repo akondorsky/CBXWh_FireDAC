@@ -1,0 +1,29 @@
+unit FindKT_U;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Keyboard, StdCtrls, Mask, Buttons;
+
+type
+  TFindKT_F = class(TForm)
+    Label3: TLabel;
+    FindBtn: TSpeedButton;
+    E_Find: TMaskEdit;
+    TouchKeyboard1: TTouchKeyboard;
+    SpeedButton1: TSpeedButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FindKT_F: TFindKT_F;
+
+implementation
+
+{$R *.dfm}
+
+end.

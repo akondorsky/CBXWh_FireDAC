@@ -1,0 +1,94 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 472
+  ClientWidth = 881
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Grid_Usl: TDBGridEh
+    Left = 0
+    Top = 0
+    Width = 881
+    Height = 472
+    Align = alClient
+    DataSource = DM.Ds_Usl
+    DynProps = <>
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    IndicatorOptions = [gioShowRowIndicatorEh]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+    ParentFont = False
+    TabOrder = 0
+    TitleParams.RowLines = 2
+    Columns = <
+      item
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'DT_ACTION'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = #1044#1072#1090#1072', '#1074#1088#1077#1084#1103
+        Width = 182
+      end
+      item
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'USLUGA'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' '#1091#1089#1083#1091#1075#1080
+        Width = 692
+      end
+      item
+        Alignment = taCenter
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'KOL_USLUG'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = #1050#1086#1083'-'#1074#1086
+      end
+      item
+        Alignment = taCenter
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'DAYS'
+        Footers = <>
+        Title.Caption = #1057#1091#1090#1086#1082' ('#1087#1088#1080' '#1093#1088#1072#1085#1077#1085#1080#1080')'
+        Width = 88
+      end
+      item
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'USERNAME'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = #1060'.'#1048'.'#1054'. '#1088#1072#1073#1086#1090#1085#1080#1082#1072
+        Width = 154
+      end
+      item
+        Alignment = taCenter
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'USL_CHECK'
+        Footers = <>
+        KeyList.Strings = (
+          '1')
+        Title.Alignment = taCenter
+        Title.Caption = #1055#1088#1080#1079#1085#1072#1082' '#1086#1087#1083#1072#1090#1099
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+end
