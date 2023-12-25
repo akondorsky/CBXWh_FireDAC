@@ -14,7 +14,6 @@ object Main_F: TMain_F
   Font.Style = []
   OldCreateOrder = True
   WindowState = wsMaximized
-  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnPaint = FormPaint

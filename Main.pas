@@ -53,7 +53,6 @@ type
     procedure Btn_RegClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormPaint(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure Btn_UnregClick(Sender: TObject);
     procedure FindBtnClick(Sender: TObject);
@@ -222,11 +221,6 @@ begin
 
 end;
 
-procedure TMain_F.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  if DM.DB.Connected then DM.DB.Close;
-end;
-
 procedure TMain_F.FormCreate(Sender: TObject);
 begin
   _AuthUser := False;
@@ -327,12 +321,12 @@ if Application.MessageBox('Данные будут удалены.Продолжить','Подтверждение',MB_I
 try
  try
     id_rec:=DM.Qry_Usl.FieldByName('ID').AsInteger;
-    if not DM.Sql.Transaction.InTransaction then DM.Sql.Transaction.StartTransaction;
+    if not DM.Sql.Transaction.Active then DM.Sql.Transaction.StartTransaction;
     DM.Sql.Close;
     DM.Sql.SQL.Clear;
     DM.Sql.SQL.Add('delete from ticket_money where id=:p0  ');
     DM.Sql.Params[0].asInteger:=id_rec;
-    DM.Sql.ExecQuery;
+    DM.Sql.ExecSQL;
     DM.Sql.Transaction.Commit;
     ModalResult:=mrOk;
     DM.Qry_Usl.Close;
@@ -345,7 +339,7 @@ try
       end;
   end;
 finally
-  if DM.Sql.Transaction.InTransaction then DM.Sql.Transaction.Rollback;
+  if DM.Sql.Transaction.Active then DM.Sql.Transaction.Rollback;
 end;
 end;
 

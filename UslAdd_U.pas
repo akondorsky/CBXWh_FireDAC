@@ -80,7 +80,7 @@ try
        end;
     id_ticket:=DM.Qry_Parts.FieldByName('ID_TICKET').AsInteger;
     id_part:= DM.Qry_Parts.FieldByName('ID').AsInteger;
-    if not DM.Sql.Transaction.InTransaction then DM.Sql.Transaction.StartTransaction;
+    if not DM.Sql.Transaction.Active then DM.Sql.Transaction.StartTransaction;
     DM.Sql.Close;
     DM.Sql.SQL.Clear;
     DM.Sql.SQL.Add('insert into ticket_money (id_ticket,id_part,id_usl,kol_uslug,days,username,ts_flag) ');
@@ -91,14 +91,14 @@ try
      if Length(Trim(E_Kol.Text)) = 0  then
         DM.SQL.Params[3].Value:=null
       else
-        DM.SQL.Params[3].AsDouble:=StrToFloat(E_Kol.Text);
+        DM.SQL.Params[3].AsFloat :=StrToFloat(E_Kol.Text);
      if Length(Trim(E_Days.Text)) = 0  then
         DM.SQL.Params[4].Value:=null
       else
         DM.SQL.Params[4].AsInteger:=StrToInt(E_Days.Text);
     DM.SQL.Params[5].AsString:=_User;
     DM.Sql.Params[6].asInteger:=Main_F.TS_Flag;
-    DM.Sql.ExecQuery;
+    DM.Sql.ExecSQL;
     DM.Sql.Transaction.Commit;
     ModalResult:=mrOk;
     DM.Qry_Usl.Close;
@@ -111,7 +111,7 @@ try
       end;
   end;
 finally
-  if DM.Sql.Transaction.InTransaction then DM.Sql.Transaction.Rollback;
+  if DM.Sql.Transaction.Active then DM.Sql.Transaction.Rollback;
 end;
 end;
 
