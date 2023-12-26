@@ -240,7 +240,7 @@ begin
   Result:='';
   for i := 1 to Length(Source) do
    begin
-    if Source[i] in ['A'..'Z', 'a'..'z', 'À'..'ß', 'à'..'ÿ','0'..'9'] then
+    if SysUtils.CharInSet(Source[i], ['A'..'Z', 'a'..'z', 'À'..'ß', 'à'..'ÿ','0'..'9']) then
      Dest := Dest + Source[i];
   end;
   Result:=Dest;

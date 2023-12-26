@@ -1,19 +1,15 @@
 unit Main;
-
 interface
-
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, ExtCtrls, Buttons, StdCtrls,Contactless,ESDK2Lib_Tlb,ActiveX,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, GridsEh,
   DBAxisGridsEh, DBGridEh, ImgList,StrUtils, Mask, Keyboard, DBCtrls,
-  PropFilerEh, PropStorageEh,DB, Grids, DBGrids, System.ImageList, EhLibVCL;
-
+  PropFilerEh, PropStorageEh,DB, Grids, DBGrids, System.ImageList, EhLibVCL,FireDAC.Phys.IBWrapper;
 type
   BSTRArray = Array of PWideChar;
   ByteArray = Array of Byte;
   PByteArray = ^ByteArray;
-
   TMain_F = class(TForm)
     Pn_Info: TPanel;
     StatusBar1: TStatusBar;
@@ -49,6 +45,7 @@ type
     DBGridEh1: TDBGridEh;
     PropStorageEh1: TPropStorageEh;
     RegPropStorageManEh1: TRegPropStorageManEh;
+    Label3: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure Btn_RegClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -79,15 +76,14 @@ type
     { Public declarations }
     TS_Flag:Integer;
     function Find_KT (S:String):Boolean;
+    procedure ConnectionError(AException : Exception);
   end;
-
 var
   Main_F: TMain_F;
-
+const
+  LOGIN_STRING : String = 'User_Name=sysdba;Password=mkey;';
 implementation
-
 uses Login_U, dm_u, global_u, myutils, FindKT_U, UslAdd_U;
-
 {$R *.dfm}
 function TMain_F.GetCardGui(AReader:WideString):String;
 var
@@ -98,6 +94,8 @@ var
   ptr:Pointer;
   s:string;
 begin
+Result:='';
+try
   Card.ConnectionReader:=Reader;
   Card.Connect1;
   psa:= Card.GetUID;
@@ -108,8 +106,14 @@ begin
   for i:=0 to hb-lb do    s:=s+IntToHex(arGuid[i],2);  //показываем
   SafeArrayUnaccessData(psa); //закрываем доступ
   Result:=s;
- end;
-
+except
+  on E:Exception do
+    begin
+      ShowMessage(E.Message);
+      Exit;
+    end;
+end;
+end;
 procedure TMain_F.OnCardCaptured(ASender: TObject; const ReaderName: WideString; ATR: {??PSafeArray}OleVariant);
 var
   psa: PSafeArray;
@@ -133,15 +137,14 @@ begin
     else
      Lbl_User.Caption:= 'Пользователь не опознан';
 end;
-
 procedure TMain_F.OnCardReleased(ASender: TObject; const ReaderName: WideString);
 begin
   CardType:=0;
   Reader:='';
 end;
-
 procedure TMain_F.Btn_UnregClick(Sender: TObject);
 begin
+  DM.CloseDB;
   Pn_Info.SetFocus;
   _AuthUser:=False;
   Lbl_User.Caption:='Пользован не авторизован';
@@ -149,9 +152,7 @@ begin
   Btn_Reg.Enabled:=(not _AuthUser);
   Btn_UnReg.Enabled:= _AuthUser;
   Pnl_Menu.Enabled:=False;
-  DM.CloseDB;
 end;
-
 procedure TMain_F.CheckATR(ASender: TObject; const ReaderName: WideString; ATR: {??PSafeArray}OleVariant; out ATRisOk: WordBool);
 var
   psa: PSafeArray;
@@ -164,11 +165,28 @@ begin
    (wType=CL_CARDTYPE_MIFARE_4K) or
    (wType=CL_CARDTYPE_MIFARE_ULTRA_LIGHT);
 end;
+procedure TMain_F.ConnectionError(AException: Exception);
+var i:Integer;
+begin
+  if AException is EIBNativeException  then
+    begin
+      Application.MessageBox('Ошибка соединения с базой данной.Программа будет приостановлена.',
+                             'Внимание', MB_ICONERROR+MB_OK);
+    end
+   else
+      Application.MessageBox(PWideChar(AException.Message), 'Внимание', MB_ICONERROR+MB_OK);
+   for i := 0 to Application.ComponentCount-1 do
+     begin
+       if (Application.Components[i] is TForm) and ( Application.Components[i].Name <> 'Main_F') then (Application.Components[i] as TForm).Close;
+     end;
+   _ConnectionFlag:=False;
+   Btn_UnregClick(Self);
+end;
 
 function TMain_F.ConnectToDatabase:Boolean;
 var
   F:TextFile;
-  FileName,ConnParams,DB_Name:String;
+  FileName,ConnParams,DB_Name,s:String;
 begin
   Result:=False;
   FileName:='connectstring.ini';
@@ -177,7 +195,8 @@ begin
   Readln(F,DB_Name);
   ReadLn(F,ConnParams);
   CloseFile(F);
-  ConnParams:=DB_Name+ConnParams+'User_Name=sysdba;Password=mkey;';
+  s:= ConnParams+DB_Name ;
+  ConnParams:=s+LOGIN_STRING;
   DM.FDConn.Params.Clear;
   DM.FDConn.ConnectionString:=ConnParams;
   try
@@ -185,22 +204,18 @@ begin
   except
     on E: Exception do
       begin
-       Application.MessageBox(PWideChar(E.Message),'Ошибка соединения с базой данных',MB_ICONERROR+MB_OK);
+       Application.MessageBox(PWideChar(E.Message),'Ошибка соединения с базой данных.Приложение будет завершено.',MB_ICONERROR+MB_OK);
        Halt;
       end
   end;
-  _DbName:='Соединение успешно.'+DB_Name;
+  _DbName:=s;
   _ConnectionString:=ConnParams;
-
 end;
-
-
 
 procedure TMain_F.FindBtnClick(Sender: TObject);
 begin
   FindKT_F.ShowModal;
 end;
-
 Function TMain_F.Find_KT (S:String):Boolean;
 begin
 { if Length(Trim(S)) <> 9 then
@@ -218,9 +233,7 @@ begin
  DM.Qry_Parts.Params[1].AsInteger:=StrToInt(Copy(S,9,1));
  DM.Qry_Parts.Open;
  if not DM.Qry_parts.FieldByName('ID').IsNull then Result:=True;
-
 end;
-
 procedure TMain_F.FormCreate(Sender: TObject);
 begin
   _AuthUser := False;
@@ -241,7 +254,6 @@ begin
       ShowMessage(E.Message);
   end;
 end;
-
 procedure TMain_F.FormDestroy(Sender: TObject);
 begin
   Capture.StopCapture;
@@ -249,47 +261,39 @@ begin
   Card.Free;
   Mifare.Free;
 end;
-
 procedure TMain_F.FormPaint(Sender: TObject);
 begin
   StatusBar1.Panels[0].Width := Round(StatusBar1.Width/2);
   StatusBar1.Panels[1].Width :=StatusBar1.Panels[0].Width;
 end;
-
 procedure TMain_F.FormShow(Sender: TObject);
 begin
 _ConnectionFlag := ConnectToDatabase;
 StatusBar1.Panels[0].Text := _DbName;
+Label3.Caption:=SysUtils.FormatSettings.DateSeparator;
 SetStartValues;
 end;
-
 procedure TMain_F.SetStartValues;
 begin
   Lbl_User.Caption:='';
   Lbl_dolj.Caption:='';
-
 end;
-
 procedure TMain_F.SpeedButton1Click(Sender: TObject);
 begin
    if not DM.Qry_TP.Eof then DM.Qry_TP.Next;
 end;
-
 procedure TMain_F.SpeedButton2Click(Sender: TObject);
 begin
    if not DM.Qry_Tp.Bof then DM.Qry_Tp.Prior;
 end;
-
 procedure TMain_F.SpeedButton3Click(Sender: TObject);
 begin
  if not DM.Qry_Usl.Eof then DM.Qry_Usl.Next;
 end;
-
 procedure TMain_F.SpeedButton4Click(Sender: TObject);
 begin
  if not DM.Qry_Usl.Bof then DM.Qry_Usl.Prior;
 end;
-
 procedure TMain_F.Btn_AddUslClick(Sender: TObject);
 var
   id_price:Integer;
@@ -302,7 +306,6 @@ begin
   DM.Qry_PriceList.Open;
   UslAdd_F.showModal;
 end;
-
 procedure TMain_F.Btn_DeluslClick(Sender: TObject);
 var
  id_rec:Integer;
@@ -342,9 +345,16 @@ finally
   if DM.Sql.Transaction.Active then DM.Sql.Transaction.Rollback;
 end;
 end;
-
 procedure TMain_F.Btn_RegClick(Sender: TObject);
 begin
+ try
+    if not DM.FDConn.Connected then DM.FDConn.Open;
+ except
+   begin
+    Application.MessageBox('Ошибка соединения с базой данных.','Внимание',MB_ICONERROR + mb_Ok);
+    Exit;
+   end;
+ end;
  if Login_F.ShowModal = mrOk then
     begin
       Lbl_User.Caption:=_User;
@@ -355,7 +365,5 @@ begin
       DM.OpenDB;
     end;
 end;
-
 end.
-
 

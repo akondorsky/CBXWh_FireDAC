@@ -106,7 +106,7 @@ type
   end;
 var
   JMPInstruction :TJMPInstruction;
-  NW :DWORD;
+  NW :NativeUInt;
 begin
   OldProc := ResolvePackageThunk(OldProc);
 
@@ -126,8 +126,8 @@ begin
   Result := IChar;
   if  CType = mcIntlLiteral  then
     case IChar of
-      mMskTimeSeparator: Result := TimeSeparator;
-      mMskDateSeparator: Result := DateSeparator;
+      mMskTimeSeparator: Result := SysUtils.FormatSettings.TimeSeparator;
+      mMskDateSeparator: Result := SysUtils.FormatSettings.DateSeparator;
     end;
 end;
 

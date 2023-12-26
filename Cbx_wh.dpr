@@ -13,7 +13,8 @@ uses
   ESDK2Lib_TLB in 'Lib\ESDK2Lib_TLB.pas',
   FindKT_U in 'FindKT_U.pas' {FindKT_F},
   UslAdd_U in 'UslAdd_U.pas' {UslAdd_F},
-  PriceList_U in 'PriceList_U.pas' {PriceList_F};
+  PriceList_U in 'PriceList_U.pas' {PriceList_F},
+  awPatchTMaskEdit in 'awPatchTMaskEdit.Pas';
 
 {$R *.res}
   var

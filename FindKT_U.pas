@@ -17,6 +17,8 @@ type
     procedure E_FindEnter(Sender: TObject);
     procedure E_FindKeyPress(Sender: TObject; var Key: Char);
     procedure Btn_CloseClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -25,11 +27,12 @@ type
 
 var
   FindKT_F: TFindKT_F;
+  //MY_DATESEPARATOR:Char;
 
 implementation
 
 {$R *.dfm}
-uses main;
+uses main,awPatchTMaskEdit;
 
 procedure TFindKT_F.Btn_CloseClick(Sender: TObject);
 begin
@@ -56,4 +59,20 @@ begin
   if not SysUtils.CharInSet(Key,['0'..'9','/']) then Key:=#0;
 end;
 
+procedure TFindKT_F.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+ //System.SysUtils.FormatSettings.DateSeparator:=MY_DATESEPARATOR;
+end;
+
+procedure TFindKT_F.FormShow(Sender: TObject);
+begin
+//MY_DATESEPARATOR:=System.SysUtils.FormatSettings.DateSeparator;
+//  System.SysUtils.FormatSettings.DateSeparator:='/';
+//  E_Find.EditMask:='0000000\/0;1;_';
+end;
+
 end.
+
+
+
+

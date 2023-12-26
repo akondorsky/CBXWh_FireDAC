@@ -6,7 +6,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
   FireDAC.Phys, FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait,
   FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
-  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.UI,FireDAC.Phys.IBWrapper;
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.UI;
 type
   TDM = class(TDataModule)
     DS_TP: TDataSource;
@@ -42,9 +42,9 @@ uses global_u,main;
 {$R *.dfm}
 procedure TDM.CloseDB;
 begin
-  Qry_Parts.Close;
-  Qry_TP.Close;
-  Qry_Usl.Close;
+  if Qry_Parts.Active then Qry_Parts.Close;
+  if Qry_TP.Active then Qry_TP.Close;
+  if Qry_Usl.Active then Qry_Usl.Close;
 end;
 procedure TDM.DS_TPStateChange(Sender: TObject);
 begin
@@ -57,12 +57,7 @@ end;
 procedure TDM.FDConnError(ASender, AInitiator: TObject;
   var AException: Exception);
 begin
-  if AException is EIBNativeException  then
-    begin
-      Vcl.Dialogs.ShowMessage(AException.ClassName + '!!!!'+AException.Message);
-    end
-   else
-     Vcl.Dialogs.ShowMessage('Other Error');
+  Main_F.ConnectionError(AException);
 end;
 
 

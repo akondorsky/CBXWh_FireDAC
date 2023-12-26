@@ -36,7 +36,7 @@ object DM: TDM
       'Protocol=TCPIP'
       'Server=127.0.0.1'
       'Port=3050'
-      'Database=C:\FB_DB\SIRIUS_25.FDB'
+      'Database=f:\FB_DB\SIRIUS_25.FDB'
       'DriverID=FB')
     LoginPrompt = False
     Transaction = FDTrR

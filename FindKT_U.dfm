@@ -12,9 +12,9 @@ object FindKT_F: TFindKT_F
   Font.Height = -19
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
-  PixelsPerInch = 96
+  OnClose = FormClose
+  OnShow = FormShow
   TextHeight = 23
   object Label3: TLabel
     Left = 21
@@ -266,6 +266,8 @@ object FindKT_F: TFindKT_F
     GradientStart = clGray
     Layout = 'NumPad'
     ParentColor = False
+    ExplicitTop = 159
+    ExplicitWidth = 545
     CustomCaptionOverrides = {
       0100000001000000020000000A45006E007400650072000A45006E0074006500
       7200}

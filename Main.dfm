@@ -1385,6 +1385,13 @@ object Main_F: TMain_F
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = FindBtnClick
     end
+    object Label3: TLabel
+      Left = 960
+      Top = 32
+      Width = 54
+      Height = 23
+      Caption = 'Label3'
+    end
   end
   object ImL_32: TImageList
     ColorDepth = cd32Bit
