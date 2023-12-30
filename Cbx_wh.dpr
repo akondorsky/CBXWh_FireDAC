@@ -1,8 +1,8 @@
 program Cbx_wh;
-
 uses
   Windows,
   Forms,
+  System.SysUtils,
   Main in 'Main.pas' {Main_F},
   dm_u in 'dm_u.pas' {DM: TDataModule},
   Splash_U in 'Splash_U.pas' {SplashForm},
@@ -19,9 +19,24 @@ uses
 {$R *.res}
   var
    Start:Cardinal;
+   F:TextFile;
+   FileName:String;
 begin
   Application.Initialize;
   Start:=GetTickCount;
+  _StartFlag:=True;
+  FileName:='connectstring.ini';
+  try
+      AssignFile(F,FileName);
+      Reset(F);
+  except
+      on E: Exception do
+        begin
+            Application.MessageBox('Файл настроек не найден.Запуск программы невозможен.','Внимание',MB_ICONERROR + mb_Ok);
+            Halt;
+        end;
+  end;
+
   SplashForm := TSplashForm.Create( Application );
   SplashForm.Show;
   SplashForm.Update;
@@ -29,6 +44,12 @@ begin
   SplashForm.Label1.Caption:='Подключение к базе данных...';
   SplashForm.Update;
   Application.CreateForm(TDM, DM);
+  if not _ConnectionFlag then
+    begin
+      Application.MessageBox('Подключение не удалось.Запуск программы невозможен.','Внимание',MB_ICONERROR + mb_Ok);
+      Halt;
+    end;
+  _StartFlag:=False;
   Application.CreateForm(TMain_F, Main_F);
   Application.CreateForm(TLogin_F, Login_F);
   Application.CreateForm(TFindKT_F, FindKT_F);

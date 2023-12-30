@@ -1,5 +1,6 @@
 object DM: TDM
   OldCreateOrder = True
+  OnCreate = DataModuleCreate
   Height = 361
   Width = 446
   object DS_TP: TDataSource

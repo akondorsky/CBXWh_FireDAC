@@ -45,7 +45,6 @@ type
     DBGridEh1: TDBGridEh;
     PropStorageEh1: TPropStorageEh;
     RegPropStorageManEh1: TRegPropStorageManEh;
-    Label3: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure Btn_RegClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -66,7 +65,6 @@ type
     Capture: TPCSCCapture;
     CardType: word;
     Reader : WideString;
-    function ConnectToDatabase:Boolean ;
     procedure SetStartValues;
     procedure OnCardCaptured(ASender: TObject; const ReaderName: WideString; ATR: {??PSafeArray}OleVariant);
     procedure OnCardReleased(ASender: TObject; const ReaderName: WideString);
@@ -80,8 +78,7 @@ type
   end;
 var
   Main_F: TMain_F;
-const
-  LOGIN_STRING : String = 'User_Name=sysdba;Password=mkey;';
+
 implementation
 uses Login_U, dm_u, global_u, myutils, FindKT_U, UslAdd_U;
 {$R *.dfm}
@@ -95,7 +92,7 @@ var
   s:string;
 begin
 Result:='';
-try
+//try
   Card.ConnectionReader:=Reader;
   Card.Connect1;
   psa:= Card.GetUID;
@@ -106,13 +103,13 @@ try
   for i:=0 to hb-lb do    s:=s+IntToHex(arGuid[i],2);  //показываем
   SafeArrayUnaccessData(psa); //закрываем доступ
   Result:=s;
-except
-  on E:Exception do
-    begin
-      ShowMessage(E.Message);
-      Exit;
-    end;
-end;
+//except
+//  on E:Exception do
+//    begin
+//      ShowMessage(E.Message);
+//      Exit;
+//    end;
+//end;
 end;
 procedure TMain_F.OnCardCaptured(ASender: TObject; const ReaderName: WideString; ATR: {??PSafeArray}OleVariant);
 var
@@ -170,46 +167,25 @@ var i:Integer;
 begin
   if AException is EIBNativeException  then
     begin
-      Application.MessageBox('Ошибка соединения с базой данной.Программа будет приостановлена.',
+     if Length(_ConnectionString) = 0 then
+        begin
+         Application.MessageBox('Ошибка соединения с базой данной.Программа будет завершена.',
+                             'Внимание', MB_ICONERROR+MB_OK);
+         Halt;
+        end
+       else
+         Application.MessageBox('Ошибка соединения с базой данной.Программа будет приостановлена.',
                              'Внимание', MB_ICONERROR+MB_OK);
     end
    else
       Application.MessageBox(PWideChar(AException.Message), 'Внимание', MB_ICONERROR+MB_OK);
+
    for i := 0 to Application.ComponentCount-1 do
      begin
        if (Application.Components[i] is TForm) and ( Application.Components[i].Name <> 'Main_F') then (Application.Components[i] as TForm).Close;
      end;
    _ConnectionFlag:=False;
    Btn_UnregClick(Self);
-end;
-
-function TMain_F.ConnectToDatabase:Boolean;
-var
-  F:TextFile;
-  FileName,ConnParams,DB_Name,s:String;
-begin
-  Result:=False;
-  FileName:='connectstring.ini';
-  AssignFile(F,FileName);
-  Reset(F);
-  Readln(F,DB_Name);
-  ReadLn(F,ConnParams);
-  CloseFile(F);
-  s:= ConnParams+DB_Name ;
-  ConnParams:=s+LOGIN_STRING;
-  DM.FDConn.Params.Clear;
-  DM.FDConn.ConnectionString:=ConnParams;
-  try
-     DM.FDConn.Open;
-  except
-    on E: Exception do
-      begin
-       Application.MessageBox(PWideChar(E.Message),'Ошибка соединения с базой данных.Приложение будет завершено.',MB_ICONERROR+MB_OK);
-       Halt;
-      end
-  end;
-  _DbName:=s;
-  _ConnectionString:=ConnParams;
 end;
 
 procedure TMain_F.FindBtnClick(Sender: TObject);
@@ -251,7 +227,8 @@ begin
     Capture.InitializeCapture;
   except
     on E: Exception  do
-      ShowMessage(E.Message);
+      Abort;
+      //ShowMessage(E.Message);
   end;
 end;
 procedure TMain_F.FormDestroy(Sender: TObject);
@@ -268,9 +245,7 @@ begin
 end;
 procedure TMain_F.FormShow(Sender: TObject);
 begin
-_ConnectionFlag := ConnectToDatabase;
 StatusBar1.Panels[0].Text := _DbName;
-Label3.Caption:=SysUtils.FormatSettings.DateSeparator;
 SetStartValues;
 end;
 procedure TMain_F.SetStartValues;

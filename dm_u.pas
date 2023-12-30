@@ -27,6 +27,7 @@ type
     procedure DS_TPStateChange(Sender: TObject);
     procedure FDConnError(ASender, AInitiator: TObject;
       var AException: Exception);
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,18 +35,70 @@ type
     procedure OpenDB;
     procedure CloseDB;
     procedure GetUserFromCard(AGui:String);
+    function CheckConnection:Boolean;
+    function GetConnectionString:String;
+    function ConnectToDatabase:Boolean;
   end;
 var
   DM: TDM;
+const
+  LOGIN_STRING : String = 'User_Name=sysdba;Password=mkey;';
+
 implementation
 uses global_u,main;
 {$R *.dfm}
+
+function TDM.ConnectToDatabase:Boolean;
+var
+  F:TextFile;
+  FileName,ConnParams,DB_Name,s:String;
+begin
+  Result:=False;
+  if Length(_ConnectionString) = 0 then
+    begin
+      FileName:='connectstring.ini';
+      AssignFile(F,FileName);
+      Reset(F);
+      Readln(F,DB_Name);
+      ReadLn(F,ConnParams);
+      CloseFile(F);
+      s:= ConnParams+DB_Name ;
+      ConnParams:=s+LOGIN_STRING;
+      DM.FDConn.Params.Clear;
+      DM.FDConn.ConnectionString:=ConnParams;
+    end;
+   DM.FDConn.Open;
+  _DbName:=s;
+  _ConnectionString:=ConnParams;
+end;
+
+
+function TDM.CheckConnection: Boolean;
+var
+ b:Boolean;
+begin
+  FDConn.Open;
+  b:=FDConn.Connected;
+  Result:=b;
+end;
+
 procedure TDM.CloseDB;
 begin
   if Qry_Parts.Active then Qry_Parts.Close;
   if Qry_TP.Active then Qry_TP.Close;
   if Qry_Usl.Active then Qry_Usl.Close;
 end;
+
+procedure TDM.DataModuleCreate(Sender: TObject);
+var
+ s:String;
+begin
+  FDConn.Params.Clear;
+  s:=GetConnectionString;
+  FDConn.ConnectionString:=s;
+  _ConnectionFlag:=CheckConnection;
+end;
+
 procedure TDM.DS_TPStateChange(Sender: TObject);
 begin
   Main_F.Pnl_NavTP.Enabled := DM.Qry_TP.Active;
@@ -57,9 +110,25 @@ end;
 procedure TDM.FDConnError(ASender, AInitiator: TObject;
   var AException: Exception);
 begin
-  Main_F.ConnectionError(AException);
+  if not _StartFlag then
+    Main_F.ConnectionError(AException);
 end;
 
+
+function TDM.GetConnectionString: String;
+var
+  F:TextFile;
+  FileName,ConnParams,DB_Name,s:String;
+begin
+  Result:='';
+  FileName:='connectstring.ini';
+  AssignFile(F,FileName);
+  Reset(F);
+  Readln(F,DB_Name);
+  ReadLn(F,ConnParams);
+  CloseFile(F);
+  Result:= ConnParams+DB_Name +LOGIN_STRING ;
+end;
 
 procedure TDM.GetUserFromCard(AGui: String);
 begin

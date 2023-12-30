@@ -12,6 +12,7 @@ var
   _CardGui : String;
   _ConnectionString :String;
   _ConnectionFlag : Boolean;
+  _StartFlag : Boolean;
 implementation
 
 end.

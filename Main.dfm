@@ -1385,13 +1385,6 @@ object Main_F: TMain_F
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = FindBtnClick
     end
-    object Label3: TLabel
-      Left = 960
-      Top = 32
-      Width = 54
-      Height = 23
-      Caption = 'Label3'
-    end
   end
   object ImL_32: TImageList
     ColorDepth = cd32Bit
@@ -8181,8 +8174,8 @@ object Main_F: TMain_F
       000000000000}
   end
   object ImL_Check: TImageList
-    Left = 784
-    Top = 32
+    Left = 328
+    Top = 160
     Bitmap = {
       494C010101000800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
