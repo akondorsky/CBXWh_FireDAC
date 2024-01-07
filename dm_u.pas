@@ -28,6 +28,7 @@ type
     procedure FDConnError(ASender, AInitiator: TObject;
       var AException: Exception);
     procedure DataModuleCreate(Sender: TObject);
+    procedure FDConnAfterConnect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -43,11 +44,9 @@ var
   DM: TDM;
 const
   LOGIN_STRING : String = 'User_Name=sysdba;Password=mkey;';
-
 implementation
 uses global_u,main;
 {$R *.dfm}
-
 function TDM.ConnectToDatabase:Boolean;
 var
   F:TextFile;
@@ -72,7 +71,6 @@ begin
   _ConnectionString:=ConnParams;
 end;
 
-
 function TDM.CheckConnection: Boolean;
 var
  b:Boolean;
@@ -88,7 +86,6 @@ begin
   if Qry_TP.Active then Qry_TP.Close;
   if Qry_Usl.Active then Qry_Usl.Close;
 end;
-
 procedure TDM.DataModuleCreate(Sender: TObject);
 var
  s:String;
@@ -107,13 +104,20 @@ procedure TDM.Ds_UslStateChange(Sender: TObject);
 begin
   Main_F.Pnl_NavUsl.Enabled := DM.Qry_Usl.Active;
 end;
+procedure TDM.FDConnAfterConnect(Sender: TObject);
+begin
+  if _LockFlag then
+     begin
+
+     end;
+end;
+
 procedure TDM.FDConnError(ASender, AInitiator: TObject;
   var AException: Exception);
 begin
   if not _StartFlag then
     Main_F.ConnectionError(AException);
 end;
-
 
 function TDM.GetConnectionString: String;
 var

@@ -14,7 +14,8 @@ uses
   FindKT_U in 'FindKT_U.pas' {FindKT_F},
   UslAdd_U in 'UslAdd_U.pas' {UslAdd_F},
   PriceList_U in 'PriceList_U.pas' {PriceList_F},
-  awPatchTMaskEdit in 'awPatchTMaskEdit.Pas';
+  awPatchTMaskEdit in 'awPatchTMaskEdit.Pas',
+  Unit2 in 'Unit2.pas' {Form2};
 
 {$R *.res}
   var
@@ -43,7 +44,9 @@ begin
   //Application.MainFormOnTaskbar := True;
   SplashForm.Label1.Caption:='Подключение к базе данных...';
   SplashForm.Update;
+  Application.CreateForm(TMain_F, Main_F);
   Application.CreateForm(TDM, DM);
+  Application.CreateForm(TForm2, Form2);
   if not _ConnectionFlag then
     begin
       Application.MessageBox('Подключение не удалось.Запуск программы невозможен.','Внимание',MB_ICONERROR + mb_Ok);

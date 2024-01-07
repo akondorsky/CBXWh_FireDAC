@@ -13,6 +13,7 @@ var
   _ConnectionString :String;
   _ConnectionFlag : Boolean;
   _StartFlag : Boolean;
+  _LockFlag : Boolean;
 implementation
 
 end.

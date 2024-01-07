@@ -42,6 +42,7 @@ object DM: TDM
     LoginPrompt = False
     Transaction = FDTrR
     OnError = FDConnError
+    AfterConnect = FDConnAfterConnect
     Left = 16
     Top = 8
   end

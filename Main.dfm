@@ -285,9 +285,9 @@ object Main_F: TMain_F
   end
   object Pnl_Grigs: TPanel
     Left = 0
-    Top = 96
+    Top = 137
     Width = 1247
-    Height = 512
+    Height = 471
     Align = alClient
     TabOrder = 2
     object Pnl_Parts: TPanel
@@ -689,7 +689,7 @@ object Main_F: TMain_F
       Left = 1
       Top = 321
       Width = 1245
-      Height = 190
+      Height = 149
       Align = alClient
       Caption = 'Pnl_Uslugi'
       TabOrder = 2
@@ -697,13 +697,13 @@ object Main_F: TMain_F
         Left = 1201
         Top = 1
         Width = 43
-        Height = 188
+        Height = 147
         Align = alRight
         ParentBackground = False
         TabOrder = 0
         object SpeedButton3: TSpeedButton
           Left = 1
-          Top = 147
+          Top = 106
           Width = 41
           Height = 40
           Align = alBottom
@@ -921,7 +921,7 @@ object Main_F: TMain_F
         Left = 1
         Top = 1
         Width = 1200
-        Height = 188
+        Height = 147
         Align = alClient
         DataSource = DM.Ds_Usl
         DynProps = <>
@@ -1035,7 +1035,7 @@ object Main_F: TMain_F
   end
   object Pnl_Menu: TPanel
     Left = 0
-    Top = 0
+    Top = 41
     Width = 1247
     Height = 96
     Align = alTop
@@ -1385,6 +1385,25 @@ object Main_F: TMain_F
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = FindBtnClick
     end
+    object Button1: TButton
+      Left = 832
+      Top = 24
+      Width = 75
+      Height = 25
+      Caption = 'Lock'
+      TabOrder = 0
+      OnClick = Button1Click
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 1247
+    Height = 41
+    Align = alTop
+    Caption = 'Panel1'
+    TabOrder = 4
+    OnClick = Panel1Click
   end
   object ImL_32: TImageList
     ColorDepth = cd32Bit

@@ -45,6 +45,8 @@ type
     DBGridEh1: TDBGridEh;
     PropStorageEh1: TPropStorageEh;
     RegPropStorageManEh1: TRegPropStorageManEh;
+    Button1: TButton;
+    Panel1: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure Btn_RegClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -58,6 +60,9 @@ type
     procedure SpeedButton3Click(Sender: TObject);
     procedure Btn_AddUslClick(Sender: TObject);
     procedure Btn_DeluslClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Panel1Click(Sender: TObject);
   private
     { Private declarations }
     Card: TPCSCCard_CL_MemCard;
@@ -70,6 +75,8 @@ type
     procedure OnCardReleased(ASender: TObject; const ReaderName: WideString);
     procedure CheckATR(ASender: TObject; const ReaderName: WideString; ATR: {??PSafeArray}OleVariant; out ATRisOk: WordBool);
     function GetCardGui(AReader:WideString):String;
+    procedure LockInterface;
+    procedure UnlockInterface;
   public
     { Public declarations }
     TS_Flag:Integer;
@@ -80,7 +87,7 @@ var
   Main_F: TMain_F;
 
 implementation
-uses Login_U, dm_u, global_u, myutils, FindKT_U, UslAdd_U;
+uses Login_U, dm_u, global_u, myutils, FindKT_U, UslAdd_U, Unit2;
 {$R *.dfm}
 function TMain_F.GetCardGui(AReader:WideString):String;
 var
@@ -111,6 +118,17 @@ Result:='';
 //    end;
 //end;
 end;
+procedure TMain_F.LockInterface;
+var
+ i:integer;
+begin
+  for i := 0 to Self.ComponentCount-1 do
+     if (Self.Components[i] is  TControl) and (Self.Components[i].Name <> 'Panel1')
+         then (Self.Components[i] as TControl).Enabled:=False;
+  _LockFlag:=True;
+  ShowMessage('Locked!');
+end;
+
 procedure TMain_F.OnCardCaptured(ASender: TObject; const ReaderName: WideString; ATR: {??PSafeArray}OleVariant);
 var
   psa: PSafeArray;
@@ -134,11 +152,18 @@ begin
     else
      Lbl_User.Caption:= 'Пользователь не опознан';
 end;
+
 procedure TMain_F.OnCardReleased(ASender: TObject; const ReaderName: WideString);
 begin
   CardType:=0;
   Reader:='';
 end;
+
+procedure TMain_F.Panel1Click(Sender: TObject);
+begin
+ UnlockInterface;
+end;
+
 procedure TMain_F.Btn_UnregClick(Sender: TObject);
 begin
   DM.CloseDB;
@@ -150,6 +175,16 @@ begin
   Btn_UnReg.Enabled:= _AuthUser;
   Pnl_Menu.Enabled:=False;
 end;
+procedure TMain_F.Button1Click(Sender: TObject);
+begin
+  LockInterface;
+end;
+
+procedure TMain_F.Button2Click(Sender: TObject);
+begin
+ UnlockInterface;
+end;
+
 procedure TMain_F.CheckATR(ASender: TObject; const ReaderName: WideString; ATR: {??PSafeArray}OleVariant; out ATRisOk: WordBool);
 var
   psa: PSafeArray;
@@ -162,30 +197,36 @@ begin
    (wType=CL_CARDTYPE_MIFARE_4K) or
    (wType=CL_CARDTYPE_MIFARE_ULTRA_LIGHT);
 end;
-procedure TMain_F.ConnectionError(AException: Exception);
-var i:Integer;
-begin
-  if AException is EIBNativeException  then
-    begin
-     if Length(_ConnectionString) = 0 then
-        begin
-         Application.MessageBox('Ошибка соединения с базой данной.Программа будет завершена.',
-                             'Внимание', MB_ICONERROR+MB_OK);
-         Halt;
-        end
-       else
-         Application.MessageBox('Ошибка соединения с базой данной.Программа будет приостановлена.',
-                             'Внимание', MB_ICONERROR+MB_OK);
-    end
-   else
-      Application.MessageBox(PWideChar(AException.Message), 'Внимание', MB_ICONERROR+MB_OK);
 
-   for i := 0 to Application.ComponentCount-1 do
-     begin
-       if (Application.Components[i] is TForm) and ( Application.Components[i].Name <> 'Main_F') then (Application.Components[i] as TForm).Close;
-     end;
-   _ConnectionFlag:=False;
-   Btn_UnregClick(Self);
+procedure TMain_F.ConnectionError(AException: Exception);
+var
+  i:Integer;
+begin
+//  if AException is EIBNativeException  then
+//    begin
+//     if Length(_ConnectionString) = 0 then
+//        begin
+//         Application.MessageBox('Ошибка соединения с базой данной.Программа будет завершена.',
+//                             'Внимание', MB_ICONERROR+MB_OK);
+//         Halt;
+//        end
+//       else
+//         Application.MessageBox('Ошибка соединения с базой данной.Программа будет приостановлена.',
+//                             'Внимание', MB_ICONERROR+MB_OK);
+//    end
+//   else
+//      Application.MessageBox(PWideChar(AException.Message), 'Внимание', MB_ICONERROR+MB_OK);
+//
+//   for i := 0 to Application.ComponentCount-1 do
+//     begin
+//       if (Application.Components[i] is TForm) and ( Application.Components[i].Name <> 'Main_F') then (Application.Components[i] as TForm).Close;
+//     end;
+
+//   Btn_UnregClick(Self);
+//   _ConnectionFlag:=False;
+   //LockInterface;
+//   Form2.ShowModal;
+//   Form2.Label1.Caption:=Form2.Owner.Name;
 end;
 
 procedure TMain_F.FindBtnClick(Sender: TObject);
@@ -227,8 +268,8 @@ begin
     Capture.InitializeCapture;
   except
     on E: Exception  do
-      Abort;
-      //ShowMessage(E.Message);
+      //Abort;
+      ShowMessage('Card reader недоступен');
   end;
 end;
 procedure TMain_F.FormDestroy(Sender: TObject);
@@ -269,6 +310,16 @@ procedure TMain_F.SpeedButton4Click(Sender: TObject);
 begin
  if not DM.Qry_Usl.Bof then DM.Qry_Usl.Prior;
 end;
+procedure TMain_F.UnlockInterface;
+var
+ i:integer;
+begin
+  for i := 0 to Self.ComponentCount-1 do
+     if (Self.Components[i] is  TControl) then (Self.Components[i] as TControl).Enabled:=True;
+  _LockFlag:=False;
+  ShowMessage('UnLocked!');
+end;
+
 procedure TMain_F.Btn_AddUslClick(Sender: TObject);
 var
   id_price:Integer;
