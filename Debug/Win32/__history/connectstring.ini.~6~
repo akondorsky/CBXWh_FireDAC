@@ -1,0 +1,2 @@
+Database=c:\fb_db\sirius_25.fdb;
+CharacterSet=WIN1251;Protocol=TCPIP;Server=127.0.0.1;Port=3050;DriverID=FB;
