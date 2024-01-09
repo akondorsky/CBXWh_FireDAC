@@ -47,6 +47,7 @@ type
     RegPropStorageManEh1: TRegPropStorageManEh;
     Button1: TButton;
     Panel1: TPanel;
+    ListBox1: TListBox;
     procedure FormCreate(Sender: TObject);
     procedure Btn_RegClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -202,31 +203,14 @@ procedure TMain_F.ConnectionError(AException: Exception);
 var
   i:Integer;
 begin
-//  if AException is EIBNativeException  then
-//    begin
-//     if Length(_ConnectionString) = 0 then
-//        begin
-//         Application.MessageBox('Ошибка соединения с базой данной.Программа будет завершена.',
-//                             'Внимание', MB_ICONERROR+MB_OK);
-//         Halt;
-//        end
-//       else
-//         Application.MessageBox('Ошибка соединения с базой данной.Программа будет приостановлена.',
-//                             'Внимание', MB_ICONERROR+MB_OK);
-//    end
-//   else
-//      Application.MessageBox(PWideChar(AException.Message), 'Внимание', MB_ICONERROR+MB_OK);
-//
-//   for i := 0 to Application.ComponentCount-1 do
-//     begin
-//       if (Application.Components[i] is TForm) and ( Application.Components[i].Name <> 'Main_F') then (Application.Components[i] as TForm).Close;
-//     end;
-
-//   Btn_UnregClick(Self);
-//   _ConnectionFlag:=False;
-   //LockInterface;
-//   Form2.ShowModal;
-//   Form2.Label1.Caption:=Form2.Owner.Name;
+   ListBox1.Clear;
+   for i := 0 to Application.ComponentCount-1 do
+     begin
+       //if (Application.Components[i] is TForm) and ( Application.Components[i].Name <> 'Main_F') then (Application.Components[i] as TForm).Close;
+        if (Application.Components[i] is TForm) then ListBox1.Items.Add(Application.Components[i].Name);
+     end;
+   Btn_UnregClick(Self);
+   _ConnectionFlag:=False;
 end;
 
 procedure TMain_F.FindBtnClick(Sender: TObject);
@@ -235,11 +219,6 @@ begin
 end;
 Function TMain_F.Find_KT (S:String):Boolean;
 begin
-{ if Length(Trim(S)) <> 9 then
-    begin
-      ShowMessage('Номер КТ должен содержать 9 знаков');
-      Exit;
-    end;}
  Result:=False;
  if DM.Qry_Parts.Active then DM.Qry_Parts.Close;
  DM.Qry_Parts.SQL.Clear;
@@ -258,20 +237,15 @@ begin
   Btn_Reg.Enabled:=(not _AuthUser);
   Pnl_Menu.Enabled:=False;
   CardType:=0;
-  try
-    Card:=TPCSCCard_CL_MemCard.Create(nil);
-    Mifare := TPCSCCard_Mifare.Create(nil);
-    Capture := TPCSCCapture.Create(nil);
-    Capture.OnCardCaptured := OnCardCaptured;
-    Capture.OnCardReleased := OnCardReleased;
-    Capture.OnCheckATR := CheckATR;
-    Capture.InitializeCapture;
-  except
-    on E: Exception  do
-      //Abort;
-      ShowMessage('Card reader недоступен');
-  end;
+  Card:=TPCSCCard_CL_MemCard.Create(nil);
+  Mifare := TPCSCCard_Mifare.Create(nil);
+  Capture := TPCSCCapture.Create(nil);
+  Capture.OnCardCaptured := OnCardCaptured;
+  Capture.OnCardReleased := OnCardReleased;
+  Capture.OnCheckATR := CheckATR;
+  Capture.InitializeCapture;
 end;
+
 procedure TMain_F.FormDestroy(Sender: TObject);
 begin
   Capture.StopCapture;

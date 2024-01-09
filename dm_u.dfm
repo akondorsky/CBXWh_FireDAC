@@ -1,5 +1,4 @@
 object DM: TDM
-  OldCreateOrder = True
   OnCreate = DataModuleCreate
   Height = 361
   Width = 446
@@ -39,9 +38,14 @@ object DM: TDM
       'Port=3050'
       'Database=f:\FB_DB\SIRIUS_25.FDB'
       'DriverID=FB')
+    ResourceOptions.AssignedValues = [rvAutoReconnect]
+    ResourceOptions.AutoReconnect = True
     LoginPrompt = False
     Transaction = FDTrR
     OnError = FDConnError
+    OnLost = FDConnLost
+    OnRestored = FDConnRestored
+    OnRecover = FDConnRecover
     AfterConnect = FDConnAfterConnect
     Left = 16
     Top = 8
@@ -155,6 +159,12 @@ object DM: TDM
     Connection = FDConn
     Transaction = FDTrW
     Left = 216
+    Top = 24
+  end
+  object FDGUIxWaitCursor2: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    ScreenCursor = gcrAppWait
+    Left = 280
     Top = 24
   end
 end

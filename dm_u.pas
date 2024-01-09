@@ -23,12 +23,17 @@ type
     Qry_Usl: TFDQuery;
     Qry_PriceList: TFDQuery;
     Sql: TFDQuery;
+    FDGUIxWaitCursor2: TFDGUIxWaitCursor;
     procedure Ds_UslStateChange(Sender: TObject);
     procedure DS_TPStateChange(Sender: TObject);
     procedure FDConnError(ASender, AInitiator: TObject;
       var AException: Exception);
     procedure DataModuleCreate(Sender: TObject);
     procedure FDConnAfterConnect(Sender: TObject);
+    procedure FDConnLost(Sender: TObject);
+    procedure FDConnRecover(ASender, AInitiator: TObject; AException: Exception;
+      var AAction: TFDPhysConnectionRecoverAction);
+    procedure FDConnRestored(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,7 +50,7 @@ var
 const
   LOGIN_STRING : String = 'User_Name=sysdba;Password=mkey;';
 implementation
-uses global_u,main;
+uses global_u,main,unit2;
 {$R *.dfm}
 function TDM.ConnectToDatabase:Boolean;
 var
@@ -70,7 +75,6 @@ begin
   _DbName:=s;
   _ConnectionString:=ConnParams;
 end;
-
 function TDM.CheckConnection: Boolean;
 var
  b:Boolean;
@@ -79,7 +83,6 @@ begin
   b:=FDConn.Connected;
   Result:=b;
 end;
-
 procedure TDM.CloseDB;
 begin
   if Qry_Parts.Active then Qry_Parts.Close;
@@ -95,7 +98,6 @@ begin
   FDConn.ConnectionString:=s;
   _ConnectionFlag:=CheckConnection;
 end;
-
 procedure TDM.DS_TPStateChange(Sender: TObject);
 begin
   Main_F.Pnl_NavTP.Enabled := DM.Qry_TP.Active;
@@ -108,16 +110,33 @@ procedure TDM.FDConnAfterConnect(Sender: TObject);
 begin
   if _LockFlag then
      begin
-
      end;
 end;
-
 procedure TDM.FDConnError(ASender, AInitiator: TObject;
   var AException: Exception);
 begin
-  if not _StartFlag then
-    Main_F.ConnectionError(AException);
+//  if not _StartFlag then
+//    Main_F.ConnectionError(AException);
 end;
+procedure TDM.FDConnLost(Sender: TObject);
+begin
+  //ShowMessage('OnLost');
+end;
+
+procedure TDM.FDConnRecover(ASender, AInitiator: TObject; AException: Exception;
+  var AAction: TFDPhysConnectionRecoverAction);
+begin
+  //ShowMessage('OnRecover '+ AException.Message);
+  Form2.ShowModal;
+  AAction:=faRetry;
+end;
+
+procedure TDM.FDConnRestored(Sender: TObject);
+begin
+//   ShowMessage('OnRestored');
+end;
+
+
 
 function TDM.GetConnectionString: String;
 var
@@ -133,7 +152,6 @@ begin
   CloseFile(F);
   Result:= ConnParams+DB_Name +LOGIN_STRING ;
 end;
-
 procedure TDM.GetUserFromCard(AGui: String);
 begin
   if FDQry.Active then FDQry.Close;
