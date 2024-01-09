@@ -12,11 +12,13 @@ object Main_F: TMain_F
   Font.Height = -19
   Font.Name = 'Tahoma'
   Font.Style = []
+  OldCreateOrder = True
   WindowState = wsMaximized
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnPaint = FormPaint
   OnShow = FormShow
+  PixelsPerInch = 96
   TextHeight = 23
   object Pn_Info: TPanel
     Left = 0
@@ -27,8 +29,6 @@ object Main_F: TMain_F
     Color = clSilver
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = 607
-    ExplicitWidth = 1243
     object Btn_Reg: TSpeedButton
       Left = 16
       Top = 16
@@ -282,18 +282,16 @@ object Main_F: TMain_F
       item
         Width = 50
       end>
-    ExplicitTop = 703
-    ExplicitWidth = 1243
   end
   object Pnl_Grigs: TPanel
     Left = 0
-    Top = 216
+    Top = 96
     Width = 1247
-    Height = 392
+    Height = 512
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 1243
-    ExplicitHeight = 391
+    ExplicitTop = 216
+    ExplicitHeight = 392
     object Pnl_Parts: TPanel
       Left = 1
       Top = 1
@@ -302,7 +300,6 @@ object Main_F: TMain_F
       Align = alTop
       Caption = 'Pnl_Parts'
       TabOrder = 0
-      ExplicitWidth = 1241
       object Grid_KTParts: TDBGridEh
         Left = 1
         Top = 1
@@ -364,7 +361,6 @@ object Main_F: TMain_F
       Align = alTop
       Caption = 'Pnl_Tp'
       TabOrder = 1
-      ExplicitWidth = 1241
       object Grid_TP: TDBGridEh
         Left = 1
         Top = 1
@@ -474,7 +470,6 @@ object Main_F: TMain_F
         Align = alRight
         ParentBackground = False
         TabOrder = 1
-        ExplicitLeft = 1197
         object SpeedButton1: TSpeedButton
           Left = 1
           Top = 141
@@ -696,25 +691,23 @@ object Main_F: TMain_F
       Left = 1
       Top = 321
       Width = 1245
-      Height = 70
+      Height = 190
       Align = alClient
       Caption = 'Pnl_Uslugi'
       TabOrder = 2
-      ExplicitWidth = 1241
-      ExplicitHeight = 69
+      ExplicitHeight = 70
       object Pnl_NavUsl: TPanel
         Left = 1201
         Top = 1
         Width = 43
-        Height = 68
+        Height = 188
         Align = alRight
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = 1197
-        ExplicitHeight = 67
+        ExplicitHeight = 68
         object SpeedButton3: TSpeedButton
           Left = 1
-          Top = 27
+          Top = 147
           Width = 41
           Height = 40
           Align = alBottom
@@ -932,7 +925,7 @@ object Main_F: TMain_F
         Left = 1
         Top = 1
         Width = 1200
-        Height = 68
+        Height = 188
         Align = alClient
         DataSource = DM.Ds_Usl
         DynProps = <>
@@ -1046,14 +1039,14 @@ object Main_F: TMain_F
   end
   object Pnl_Menu: TPanel
     Left = 0
-    Top = 120
+    Top = 0
     Width = 1247
     Height = 96
     Align = alTop
     Color = clSilver
     ParentBackground = False
     TabOrder = 3
-    ExplicitWidth = 1243
+    ExplicitTop = 120
     object Btn_Delusl: TSpeedButton
       Left = 599
       Top = 16
@@ -1396,34 +1389,6 @@ object Main_F: TMain_F
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = FindBtnClick
-    end
-    object Button1: TButton
-      Left = 832
-      Top = 24
-      Width = 75
-      Height = 25
-      Caption = 'Lock'
-      TabOrder = 0
-      OnClick = Button1Click
-    end
-  end
-  object Panel1: TPanel
-    Left = 0
-    Top = 0
-    Width = 1247
-    Height = 120
-    Align = alTop
-    Caption = 'Panel1'
-    TabOrder = 4
-    OnClick = Panel1Click
-    ExplicitWidth = 1243
-    object ListBox1: TListBox
-      Left = 16
-      Top = 17
-      Width = 393
-      Height = 97
-      ItemHeight = 23
-      TabOrder = 0
     end
   end
   object ImL_32: TImageList

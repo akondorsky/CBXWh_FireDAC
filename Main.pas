@@ -45,9 +45,6 @@ type
     DBGridEh1: TDBGridEh;
     PropStorageEh1: TPropStorageEh;
     RegPropStorageManEh1: TRegPropStorageManEh;
-    Button1: TButton;
-    Panel1: TPanel;
-    ListBox1: TListBox;
     procedure FormCreate(Sender: TObject);
     procedure Btn_RegClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -203,14 +200,14 @@ procedure TMain_F.ConnectionError(AException: Exception);
 var
   i:Integer;
 begin
-   ListBox1.Clear;
-   for i := 0 to Application.ComponentCount-1 do
-     begin
-       //if (Application.Components[i] is TForm) and ( Application.Components[i].Name <> 'Main_F') then (Application.Components[i] as TForm).Close;
-        if (Application.Components[i] is TForm) then ListBox1.Items.Add(Application.Components[i].Name);
-     end;
-   Btn_UnregClick(Self);
-   _ConnectionFlag:=False;
+//   ListBox1.Clear;
+//   for i := 0 to Application.ComponentCount-1 do
+//     begin
+//       //if (Application.Components[i] is TForm) and ( Application.Components[i].Name <> 'Main_F') then (Application.Components[i] as TForm).Close;
+//        if (Application.Components[i] is TForm) then ListBox1.Items.Add(Application.Components[i].Name);
+//     end;
+//   Btn_UnregClick(Self);
+//   _ConnectionFlag:=False;
 end;
 
 procedure TMain_F.FindBtnClick(Sender: TObject);
