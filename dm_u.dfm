@@ -1,4 +1,5 @@
 object DM: TDM
+  OldCreateOrder = True
   OnCreate = DataModuleCreate
   Height = 361
   Width = 446
@@ -37,9 +38,12 @@ object DM: TDM
       'Server=127.0.0.1'
       'Port=3050'
       'Database=f:\FB_DB\SIRIUS_25.FDB'
-      'DriverID=FB')
+      'DriverID=FB'
+      'OpenMode=Open')
+    FetchOptions.AssignedValues = [evMode]
     ResourceOptions.AssignedValues = [rvAutoReconnect]
     ResourceOptions.AutoReconnect = True
+    ConnectedStoredUsage = []
     LoginPrompt = False
     Transaction = FDTrR
     OnError = FDConnError
@@ -83,6 +87,7 @@ object DM: TDM
   object Qry_TP: TFDQuery
     MasterSource = DS_Parts
     Connection = FDConn
+    ResourceOptions.AssignedValues = [rvAutoConnect]
     SQL.Strings = (
       
         'select a.*,b.name as goods, c.kr_name as val, d.firm_name as shi' +
@@ -164,7 +169,7 @@ object DM: TDM
   object FDGUIxWaitCursor2: TFDGUIxWaitCursor
     Provider = 'Forms'
     ScreenCursor = gcrAppWait
-    Left = 280
+    Left = 336
     Top = 24
   end
 end

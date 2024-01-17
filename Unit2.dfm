@@ -4,30 +4,31 @@ object Form2: TForm2
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = #1042#1085#1080#1084#1072#1085#1080#1077'!'
-  ClientHeight = 193
-  ClientWidth = 235
+  ClientHeight = 163
+  ClientWidth = 230
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  FormStyle = fsStayOnTop
+  OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnShow = FormShow
+  PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 8
-    Top = 86
-    Width = 219
-    Height = 51
+    Left = 27
+    Top = 95
+    Width = 175
+    Height = 54
     Alignment = taCenter
-    Caption = 
-      #1057#1077#1088#1074#1077#1088' '#1074#1088#1077#1084#1077#1085#1085#1086' '#1085#1077#1076#1086#1089#1090#1091#1087#1077#1085'! '#1055#1088#1086#1073#1091#1077#1084' '#1089#1086#1077#1076#1080#1085#1080#1090#1100#1089#1103' '#1079#1072#1085#1086#1074#1086'. '#1053#1072#1078#1084#1080#1090#1077' ' +
-      #1054#1050' '#1076#1083#1103' '#1087#1088#1086#1076#1086#1083#1078#1077#1085#1080#1103'.'
+    Caption = #1057#1077#1088#1074#1077#1088' '#1074#1088#1077#1084#1077#1085#1085#1086' '#1085#1077#1076#1086#1089#1090#1091#1087#1077#1085'! '#1055#1088#1086#1073#1091#1077#1084' '#1089#1086#1077#1076#1080#1085#1080#1090#1100#1089#1103' '#1079#1072#1085#1086#1074#1086'. ..'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
+    Font.Color = clRed
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -42,11 +43,12 @@ object Form2: TForm2
   end
   object SaveBtn: TBitBtn
     Left = 47
-    Top = 144
+    Top = 176
     Width = 135
     Height = 37
     Caption = 'OK'
     Default = True
+    Enabled = False
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -66,6 +68,21 @@ object Form2: TForm2
       0000}
     NumGlyphs = 2
     TabOrder = 1
+    Visible = False
     OnClick = SaveBtnClick
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 10000
+    OnTimer = Timer1Timer
+    Left = 16
+    Top = 16
+  end
+  object Timer2: TTimer
+    Enabled = False
+    Interval = 750
+    OnTimer = Timer2Timer
+    Left = 16
+    Top = 72
   end
 end

@@ -6,7 +6,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
   FireDAC.Phys, FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait,
   FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
-  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.UI;
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.UI,Vcl.Controls;
 type
   TDM = class(TDataModule)
     DS_TP: TDataSource;
@@ -38,7 +38,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    procedure OpenDB;
+    function OpenDB : Boolean;
     procedure CloseDB;
     procedure GetUserFromCard(AGui:String);
     function CheckConnection:Boolean;
@@ -108,9 +108,10 @@ begin
 end;
 procedure TDM.FDConnAfterConnect(Sender: TObject);
 begin
-  if _LockFlag then
-     begin
-     end;
+//ShowMessage('AfterConnect');
+//  if _LockFlag then
+//     begin
+//     end;
 end;
 procedure TDM.FDConnError(ASender, AInitiator: TObject;
   var AException: Exception);
@@ -127,13 +128,16 @@ procedure TDM.FDConnRecover(ASender, AInitiator: TObject; AException: Exception;
   var AAction: TFDPhysConnectionRecoverAction);
 begin
   //ShowMessage('OnRecover '+ AException.Message);
-  Form2.ShowModal;
-  AAction:=faRetry;
+AAction:=faRetry;
+//ShowMessage('OnRecover ');
+//DM.CloseDB;
+Form2.ShowModal;
 end;
 
 procedure TDM.FDConnRestored(Sender: TObject);
 begin
-//   ShowMessage('OnRestored');
+   //ShowMessage('OnRestored');
+ //if Form2.Active then Form2.ModalResult:=mrOk;
 end;
 
 
@@ -168,10 +172,17 @@ begin
       _AuthUser := True;
     end;
 end;
-procedure TDM.OpenDB;
+function TDM.OpenDB:Boolean;
 begin
+  Result:=False;
+ try
   Qry_Parts.Open;
   Qry_TP.Open;
   Qry_Usl.Open;
+  Result:=True;
+ except
+  Exit;
+ end;
+
 end;
 end.

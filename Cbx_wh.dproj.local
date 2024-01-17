@@ -4,10 +4,10 @@
     <Transaction>1899.12.30 00:00:00.000.321,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Login_U.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.814,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.dfm=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\dm_u.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.563,C:\Users\User\Documents\RAD Studio\Projects\Workers\Main.dfm=C:\Users\User\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.871,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\PriceList_U.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.682,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.373,=C:\RadStudio10\CBXWh_FireDAC-master\awPatchTMaskEdit.Pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.345,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\UslAdd_U.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.090,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.373,=C:\RadStudio10\CBXWh_FireDAC-master\awPatchTMaskEdit.Pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.871,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\PriceList_U.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.563,C:\Users\User\Documents\RAD Studio\Projects\Workers\Main.pas=C:\Users\User\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.703,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Cardcheck_U.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.821,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Cardcheck_U.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
@@ -16,7 +16,7 @@
     <Transaction>1899.12.30 00:00:00.000.460,=C:\Users\akondorsky\Documents\Embarcadero\Studio\Projects\CBXWh_FireDAC\Unit2.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.427,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\FindKT_U.dfm=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.767,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\myutils.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.384,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.767,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.440,C:\RadStudio10\CBX_WH\awPatchTMaskEdit.Pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.541,=C:\Users\User\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.594,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Splash_U.pas</Transaction>
@@ -25,9 +25,9 @@
     <Transaction>1899.12.30 00:00:00.000.345,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\UslAdd_U.dfm=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.871,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\PriceList_U.dfm=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.353,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Cbx_wh.dproj=C:\Users\User\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.767,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.090,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.294,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.384,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.682,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.789,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.483,=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.589,C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Unit1.pas=C:\Users\User\Documents\RAD Studio\Projects\CBX_WH\Global_U.pas</Transaction>
