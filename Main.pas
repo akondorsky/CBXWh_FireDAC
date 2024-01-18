@@ -75,6 +75,7 @@ type
     function GetCardGui(AReader:WideString):String;
     procedure LockInterface;
     procedure UnlockInterface;
+    procedure ShowSlideForm(AText:String);
   public
     { Public declarations }
     TS_Flag:Integer;
@@ -85,7 +86,7 @@ var
   Main_F: TMain_F;
 
 implementation
-uses Login_U, dm_u, global_u, myutils, FindKT_U, UslAdd_U, Unit2;
+uses Login_U, dm_u, global_u, myutils, FindKT_U, UslAdd_U, Unit2, SlideWindow;
 {$R *.dfm}
 function TMain_F.GetCardGui(AReader:WideString):String;
 var
@@ -265,6 +266,13 @@ begin
   Lbl_User.Caption:='';
   Lbl_dolj.Caption:='';
 end;
+procedure TMain_F.ShowSlideForm(AText: String);
+begin
+      if not Assigned(SlideWind_F) then SlideWind_F:=TSlideWind_F.Create(Application);
+      SlideWind_F.Label1.Caption:=AText;
+      SlideWind_F.Show;
+end;
+
 procedure TMain_F.SpeedButton1Click(Sender: TObject);
 begin
    if not DM.Qry_TP.Eof then DM.Qry_TP.Next;
@@ -301,7 +309,7 @@ begin
   Dm.Qry_PriceList.Close;
   DM.Qry_PriceList.Params[0].AsInteger := id_price;
   DM.Qry_PriceList.Open;
-  UslAdd_F.showModal;
+  if UslAdd_F.showModal = mrOk then ShowSlideForm('Услуга успешно добавлена');
 end;
 procedure TMain_F.Btn_DeluslClick(Sender: TObject);
 var
@@ -328,9 +336,9 @@ try
     DM.Sql.Params[0].asInteger:=id_rec;
     DM.Sql.ExecSQL;
     DM.Sql.Transaction.Commit;
-    ModalResult:=mrOk;
     DM.Qry_Usl.Close;
     DM.Qry_Usl.Open;
+    ShowSlideForm('Услуга успешно удалена!');
   except
     on E: EdatabaseError do
       begin
@@ -342,6 +350,8 @@ finally
   if DM.Sql.Transaction.Active then DM.Sql.Transaction.Rollback;
 end;
 end;
+
+
 procedure TMain_F.Btn_RegClick(Sender: TObject);
 begin
  try

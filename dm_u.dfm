@@ -166,10 +166,8 @@ object DM: TDM
     Left = 216
     Top = 24
   end
-  object FDGUIxWaitCursor2: TFDGUIxWaitCursor
-    Provider = 'Forms'
-    ScreenCursor = gcrAppWait
-    Left = 336
-    Top = 24
+  object FDPhysIBDriverLink1: TFDPhysIBDriverLink
+    Left = 216
+    Top = 104
   end
 end

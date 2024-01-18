@@ -6,7 +6,8 @@ uses
   FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
   FireDAC.Phys, FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait,
   FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
-  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.UI,Vcl.Controls;
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.UI,Vcl.Controls,
+  FireDAC.Phys.IBDef, FireDAC.Phys.IBBase, FireDAC.Phys.IB;
 type
   TDM = class(TDataModule)
     DS_TP: TDataSource;
@@ -23,7 +24,7 @@ type
     Qry_Usl: TFDQuery;
     Qry_PriceList: TFDQuery;
     Sql: TFDQuery;
-    FDGUIxWaitCursor2: TFDGUIxWaitCursor;
+    FDPhysIBDriverLink1: TFDPhysIBDriverLink;
     procedure Ds_UslStateChange(Sender: TObject);
     procedure DS_TPStateChange(Sender: TObject);
     procedure FDConnError(ASender, AInitiator: TObject;

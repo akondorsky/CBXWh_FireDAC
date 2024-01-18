@@ -15,7 +15,8 @@ uses
   UslAdd_U in 'UslAdd_U.pas' {UslAdd_F},
   PriceList_U in 'PriceList_U.pas' {PriceList_F},
   awPatchTMaskEdit in 'awPatchTMaskEdit.Pas',
-  Unit2 in 'Unit2.pas' {Form2};
+  Unit2 in 'Unit2.pas' {Form2},
+  SlideWindow in 'SlideWindow.pas' {SlideWind_F};
 
 {$R *.res}
   var

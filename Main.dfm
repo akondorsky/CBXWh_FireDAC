@@ -290,8 +290,6 @@ object Main_F: TMain_F
     Height = 512
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 216
-    ExplicitHeight = 392
     object Pnl_Parts: TPanel
       Left = 1
       Top = 1
@@ -695,7 +693,6 @@ object Main_F: TMain_F
       Align = alClient
       Caption = 'Pnl_Uslugi'
       TabOrder = 2
-      ExplicitHeight = 70
       object Pnl_NavUsl: TPanel
         Left = 1201
         Top = 1
@@ -704,7 +701,6 @@ object Main_F: TMain_F
         Align = alRight
         ParentBackground = False
         TabOrder = 0
-        ExplicitHeight = 68
         object SpeedButton3: TSpeedButton
           Left = 1
           Top = 147
@@ -1046,7 +1042,6 @@ object Main_F: TMain_F
     Color = clSilver
     ParentBackground = False
     TabOrder = 3
-    ExplicitTop = 120
     object Btn_Delusl: TSpeedButton
       Left = 599
       Top = 16

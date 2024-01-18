@@ -3,7 +3,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.Buttons,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage;
 type
   TForm2 = class(TForm)
     Label1: TLabel;
@@ -11,6 +11,7 @@ type
     SaveBtn: TBitBtn;
     Timer1: TTimer;
     Timer2: TTimer;
+    Image1: TImage;
     procedure FormShow(Sender: TObject);
     procedure SaveBtnClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -33,7 +34,7 @@ end;
 
 procedure TForm2.FormShow(Sender: TObject);
 begin
-  AI1.Animate:=True;
+  //AI1.Animate:=True;
   Timer1.Enabled:=True;
   Timer2.Enabled:=True;
 end;
