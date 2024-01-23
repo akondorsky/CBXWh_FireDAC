@@ -84,7 +84,6 @@ type
   end;
 var
   Main_F: TMain_F;
-
 implementation
 uses Login_U, dm_u, global_u, myutils, FindKT_U, UslAdd_U, Unit2, SlideWindow;
 {$R *.dfm}
@@ -127,7 +126,6 @@ begin
   _LockFlag:=True;
   ShowMessage('Locked!');
 end;
-
 procedure TMain_F.OnCardCaptured(ASender: TObject; const ReaderName: WideString; ATR: {??PSafeArray}OleVariant);
 var
   psa: PSafeArray;
@@ -151,18 +149,15 @@ begin
     else
      Lbl_User.Caption:= 'Пользователь не опознан';
 end;
-
 procedure TMain_F.OnCardReleased(ASender: TObject; const ReaderName: WideString);
 begin
   CardType:=0;
   Reader:='';
 end;
-
 procedure TMain_F.Panel1Click(Sender: TObject);
 begin
  UnlockInterface;
 end;
-
 procedure TMain_F.Btn_UnregClick(Sender: TObject);
 begin
   DM.CloseDB;
@@ -178,12 +173,10 @@ procedure TMain_F.Button1Click(Sender: TObject);
 begin
   LockInterface;
 end;
-
 procedure TMain_F.Button2Click(Sender: TObject);
 begin
  UnlockInterface;
 end;
-
 procedure TMain_F.CheckATR(ASender: TObject; const ReaderName: WideString; ATR: {??PSafeArray}OleVariant; out ATRisOk: WordBool);
 var
   psa: PSafeArray;
@@ -196,7 +189,6 @@ begin
    (wType=CL_CARDTYPE_MIFARE_4K) or
    (wType=CL_CARDTYPE_MIFARE_ULTRA_LIGHT);
 end;
-
 procedure TMain_F.ConnectionError(AException: Exception);
 var
   i:Integer;
@@ -210,7 +202,6 @@ begin
 //   Btn_UnregClick(Self);
 //   _ConnectionFlag:=False;
 end;
-
 procedure TMain_F.FindBtnClick(Sender: TObject);
 begin
   FindKT_F.ShowModal;
@@ -243,7 +234,6 @@ begin
   Capture.OnCheckATR := CheckATR;
   Capture.InitializeCapture;
 end;
-
 procedure TMain_F.FormDestroy(Sender: TObject);
 begin
   Capture.StopCapture;
@@ -298,7 +288,6 @@ begin
   _LockFlag:=False;
   ShowMessage('UnLocked!');
 end;
-
 procedure TMain_F.Btn_AddUslClick(Sender: TObject);
 var
   id_price:Integer;
@@ -351,7 +340,6 @@ finally
 end;
 end;
 
-
 procedure TMain_F.Btn_RegClick(Sender: TObject);
 begin
  try
@@ -373,4 +361,3 @@ begin
     end;
 end;
 end.
-

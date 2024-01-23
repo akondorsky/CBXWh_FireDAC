@@ -25,6 +25,7 @@ type
     Qry_PriceList: TFDQuery;
     Sql: TFDQuery;
     FDPhysIBDriverLink1: TFDPhysIBDriverLink;
+    FDManager1: TFDManager;
     procedure Ds_UslStateChange(Sender: TObject);
     procedure DS_TPStateChange(Sender: TObject);
     procedure FDConnError(ASender, AInitiator: TObject;
@@ -129,9 +130,9 @@ procedure TDM.FDConnRecover(ASender, AInitiator: TObject; AException: Exception;
   var AAction: TFDPhysConnectionRecoverAction);
 begin
   //ShowMessage('OnRecover '+ AException.Message);
-AAction:=faRetry;
+//AAction:=faCloseAbort;
 //ShowMessage('OnRecover ');
-//DM.CloseDB;
+DM.CloseDB;
 Form2.ShowModal;
 end;
 

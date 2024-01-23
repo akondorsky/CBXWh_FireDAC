@@ -170,4 +170,15 @@ object DM: TDM
     Left = 216
     Top = 104
   end
+  object FDManager1: TFDManager
+    WaitCursor = gcrAppWait
+    FormatOptions.AssignedValues = [fvMapRules]
+    FormatOptions.OwnMapRules = True
+    FormatOptions.MapRules = <>
+    ResourceOptions.AssignedValues = [rvAutoReconnect]
+    ResourceOptions.AutoReconnect = True
+    Active = True
+    Left = 384
+    Top = 8
+  end
 end

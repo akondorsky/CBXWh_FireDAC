@@ -4,8 +4,8 @@ object Form2: TForm2
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = #1042#1085#1080#1084#1072#1085#1080#1077'!'
-  ClientHeight = 190
-  ClientWidth = 230
+  ClientHeight = 567
+  ClientWidth = 684
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -1083,7 +1083,6 @@ object Form2: TForm2
     Height = 37
     Caption = 'OK'
     Default = True
-    Enabled = False
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -1103,8 +1102,29 @@ object Form2: TForm2
       0000}
     NumGlyphs = 2
     TabOrder = 1
-    Visible = False
     OnClick = SaveBtnClick
+  end
+  object Memo1: TMemo
+    Left = 240
+    Top = 48
+    Width = 329
+    Height = 237
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 2
+  end
+  object DBGrid1: TDBGrid
+    Left = 249
+    Top = 352
+    Width = 320
+    Height = 120
+    DataSource = DataSource1
+    TabOrder = 3
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
   end
   object Timer1: TTimer
     Enabled = False
@@ -1119,5 +1139,21 @@ object Form2: TForm2
     OnTimer = Timer2Timer
     Left = 16
     Top = 72
+  end
+  object DataSource1: TDataSource
+    DataSet = FDQuery1
+    Left = 624
+    Top = 104
+  end
+  object FDQuery1: TFDQuery
+    SQL.Strings = (
+      'select first 100  a.*,b.n_ticket || '#39'/'#39' || a.npp as PART_NOMER,'
+      'c.zayv,c.id_price'
+      'from TICKET_PARTS A'
+      'left join TICKET b on a.id_ticket=b.id'
+      'left join reg_ti c on a.id_owner=c.id'
+      'order by  a.id desc')
+    Left = 624
+    Top = 48
   end
 end
